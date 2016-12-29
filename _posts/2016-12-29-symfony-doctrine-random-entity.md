@@ -31,6 +31,7 @@ class RandFunction extends FunctionNode
     {
         return 'RAND()';
     }
+}
 {% endhighlight php %} 
 
 İlk etapta yukarıda ki RandFunction classını oluşturmanız ve bundan sonra config.yml dosyamıza bir ayar çekmemiz gerekiyor.
@@ -45,21 +46,21 @@ orm:
 Bunu yapmamızın ardından artık RAND() functionu Doctrine ile beraber otomatik olarak yüklü gelecek.
 
 {% highlight php %}
-    public function getRandomUser($limit)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+public function getRandomUser($limit)
+{
+    $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->addSelect('user');
-        $qb->addSelect('RAND() as HIDDEN rand')->orderBy('rand');
-
-
-        $qb->from('AcmeUserBundle:User', 'user');
-
-        $qb->setMaxResults($limit);
+    $qb->addSelect('user');
+    $qb->addSelect('RAND() as HIDDEN rand')->orderBy('rand');
 
 
-        return $qb->getQuery()->getResult();
-     }
+    $qb->from('AcmeUserBundle:User', 'user');
+
+    $qb->setMaxResults($limit);
+
+
+    return $qb->getQuery()->getResult();
+ }
 {% endhighlight php %}
 
 Ardından yukarıda ki örnekte olduğu gibi istediğiniz Entity'den random obje çekebilirsiniz.
